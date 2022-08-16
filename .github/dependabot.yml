@@ -1,0 +1,26 @@
+version: 2
+
+updates:
+  - package-ecosystem: "cargo"
+    directory: "/"
+    target-branch: "develop"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "direct"
+    commit-message:
+      prefix: "chore:"
+    assignees:
+      - "frazzer951"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "develop"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-type: "direct"
+    commit-message:
+      prefix: "chore:"
+    assignees:
+      - "frazzer951"
