@@ -9,16 +9,34 @@ fn get_extension_from_filename(filename: &str) -> Option<&str> {
     Path::new(filename).extension().and_then(OsStr::to_str)
 }
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() {
     let input_dir = "Z:\\NextCloud\\frazzer\\files\\Photos";
     //let output_dir = "Z:\\NextCloud\\frazzer\\files\\Picture_Processing";
     let output_photo_dir = "Z:\\NextCloud\\frazzer\\files\\Picture_Processing\\pictures";
     let output_video_dir = "Z:\\NextCloud\\frazzer\\files\\Picture_Processing\\videos";
     let output_other_dir = "Z:\\NextCloud\\frazzer\\files\\Picture_Processing\\other";
 
-    fs::create_dir_all(output_photo_dir)?;
-    fs::create_dir_all(output_video_dir)?;
-    fs::create_dir_all(output_other_dir)?;
+    match fs::create_dir_all(output_photo_dir) {
+        Ok(_) => {}
+        Err(e) => {
+            println!("Failed to create output_photo_dir {} - {}", output_photo_dir, e);
+            return;
+        }
+    }
+    match fs::create_dir_all(output_video_dir) {
+        Ok(_) => {}
+        Err(e) => {
+            println!("Failed to create output_photo_dir {} - {}", output_video_dir, e);
+            return;
+        }
+    }
+    match fs::create_dir_all(output_other_dir) {
+        Ok(_) => {}
+        Err(e) => {
+            println!("Failed to create output_photo_dir {} - {}", output_other_dir, e);
+            return;
+        }
+    }
 
     let photo_extensions = vec!["png", "jpg", "heic"];
     let video_extensions = vec!["mp4", "mov"];
@@ -59,6 +77,4 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let unknown_extensions: Vec<_> = unknown_extensions.into_iter().unique().collect();
     println!("Unknown Extension: {:#?}", unknown_extensions);
-
-    Ok(())
 }
