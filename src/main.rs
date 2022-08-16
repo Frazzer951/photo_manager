@@ -1,6 +1,5 @@
 use std::ffi::OsStr;
-use std::path::Path;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use fs_err as fs;
 use itertools::Itertools;
@@ -23,7 +22,6 @@ fn get_filename(filename: String, extension: &str, path: &str) -> PathBuf {
         };
         filepath.push(filename);
 
-
         // if filepath doesnt exist
         if !filepath.exists() {
             println!("VP: {}", filepath.display());
@@ -34,7 +32,6 @@ fn get_filename(filename: String, extension: &str, path: &str) -> PathBuf {
         println!("PT: {}", filepath.display());
     }
 }
-
 
 fn main() {
     //let input_dir = "Z:\\NextCloud\\frazzer\\files\\Photos";
@@ -48,25 +45,25 @@ fn main() {
     let output_other_dir = "C:\\Users\\luke3\\Desktop\\tmp\\other";
 
     match fs::create_dir_all(output_photo_dir) {
-        Ok(_) => {}
+        Ok(_) => {},
         Err(e) => {
             println!("Failed to create output_photo_dir {} - {}", output_photo_dir, e);
             return;
-        }
+        },
     }
     match fs::create_dir_all(output_video_dir) {
-        Ok(_) => {}
+        Ok(_) => {},
         Err(e) => {
             println!("Failed to create output_photo_dir {} - {}", output_video_dir, e);
             return;
-        }
+        },
     }
     match fs::create_dir_all(output_other_dir) {
-        Ok(_) => {}
+        Ok(_) => {},
         Err(e) => {
             println!("Failed to create output_photo_dir {} - {}", output_other_dir, e);
             return;
-        }
+        },
     }
 
     let photo_extensions = vec!["png", "jpg", "heic"];
@@ -82,7 +79,13 @@ fn main() {
 
             let extension = get_extension_from_filename(path.to_str().unwrap()).unwrap_or("missing");
 
-            let filename = path.file_name().unwrap().to_str().unwrap().to_string().replace(&format!(".{}", extension), "");
+            let filename = path
+                .file_name()
+                .unwrap()
+                .to_str()
+                .unwrap()
+                .to_string()
+                .replace(&format!(".{}", extension), "");
             //println!("FN: {}", filename);
             //println!("EX: .{}", extension);
 
@@ -90,14 +93,13 @@ fn main() {
                 if DRY_RUN {
                     println!("MS: {} -> {}", from.display(), to.display());
                 } else {
-                    match fs::rename(
-                        from,
-                        to,
-                    ) {
-                        Ok(_) => { println!("MS: {} -> {}", from.display(), to.display()); }
+                    match fs::rename(from, to) {
+                        Ok(_) => {
+                            println!("MS: {} -> {}", from.display(), to.display());
+                        },
                         Err(e) => {
                             println!("MF: {} ", e);
-                        }
+                        },
                     }
                 }
             };
