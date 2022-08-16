@@ -31,20 +31,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let path = entry.path();
             //println!("{}", path.display());
 
-            let extention =
-                get_extension_from_filename(path.to_str().unwrap()).unwrap_or("missing").to_lowercase();
+            let extension = get_extension_from_filename(path.to_str().unwrap())
+                .unwrap_or("missing")
+                .to_lowercase();
 
-            if photo_extensions.contains(&extention.as_str()) {
+            if photo_extensions.contains(&extension.as_str()) {
                 println!("Photo:   {}", path.display());
-            } else if video_extensions.contains(&extention.as_str()) {
+            } else if video_extensions.contains(&extension.as_str()) {
                 println!("Video:   {}", path.display());
-            } else if other_extensions.contains(&extention.as_str()) {
+            } else if other_extensions.contains(&extension.as_str()) {
                 println!("Other:   {}", path.display());
-            } else if skip_extensions.contains(&extention.as_str()) {
+            } else if skip_extensions.contains(&extension.as_str()) {
                 println!("Skip:    {}", path.display());
             } else {
                 println!("Unknown: {}", path.display());
-                unknown_extensions.push(extention.to_string());
+                unknown_extensions.push(extension.to_string());
             }
 
             //    fs::rename(
